@@ -10,6 +10,10 @@ variable "falcon_client_secret" {
 
 variable "falcon_cloud" {
   description = "Falcon cloud region abbreviation (us-1, us-2, eu-1, us-gov-1) (Alternatively, set env variable TF_VAR_falcon_cloud)"
+  validation {
+    condition     = (var.falcon_cloud == "us-1" || var.falcon_cloud == "us-2" || var.falcon_cloud == "eu-1" || var.falcon_cloud == "us-gov-1")
+    error_message = "Variable falcon_cloud must be set to one of: us-1, us-2, eu-1, us-gov-1."
+  }
 }
 
 variable "falcon_cid" {
