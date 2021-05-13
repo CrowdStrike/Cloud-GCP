@@ -1,9 +1,11 @@
 variable "falcon_client_id" {
   description = "CrowdStrike Falcon / OAuth2 API / Client ID (needs only permissions to download falcon container sensor) (Alternatively, set env variable TF_VAR_falcon_client_id)"
+  sensitive   = true
 }
 
 variable "falcon_client_secret" {
   description = "CrowdStrike Falcon / OAuth2 API / Client Secret (needs only permissions to download falcon container sensor) (Alternatively, set env variable TF_VAR_falcon_client_secret)"
+  sensitive   = true
 }
 
 variable "falcon_cloud" {
@@ -12,6 +14,7 @@ variable "falcon_cloud" {
 
 variable "falcon_cid" {
   description = "CrowdStrike Falcon CID (full cid string) (Alternatively, set env variable TF_VAR_falcon_cid)"
+  sensitive   = true
 }
 
 
