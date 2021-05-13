@@ -16,8 +16,8 @@ variable "falcon_cid" {
 
 
 resource "google_project_service" "secretmanager" {
-  provider = google
-  service  = "secretmanager.googleapis.com"
+  provider           = google
+  service            = "secretmanager.googleapis.com"
   disable_on_destroy = false
 }
 

@@ -4,7 +4,7 @@ output "admin_access" {
 }
 
 output "admin_access_web" {
-  value       = "https://console.cloud.google.com/compute/instancesDetail/zones/${var.zone}/instances/${google_compute_instance.vm_instance.name}?project=${var.project_id}"
+  value = "https://console.cloud.google.com/compute/instancesDetail/zones/${var.zone}/instances/${google_compute_instance.vm_instance.name}?project=${var.project_id}"
 }
 
 output "vulnerable-example-com" {

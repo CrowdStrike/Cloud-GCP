@@ -30,14 +30,14 @@ resource "google_service_account" "gke-admin-vm" {
 }
 
 resource "google_project_iam_binding" "gke-admin-vm-admins-clusters" {
-  role    = "roles/container.admin"
+  role = "roles/container.admin"
   members = [
     "serviceAccount:${google_service_account.gke-admin-vm.email}"
   ]
 }
 
 resource "google_project_iam_binding" "gke-admin-vm-pushes-images" {
-  role    = "roles/storage.admin"
+  role = "roles/storage.admin"
   members = [
     "serviceAccount:${google_service_account.gke-admin-vm.email}"
   ]
@@ -46,9 +46,9 @@ resource "google_project_iam_binding" "gke-admin-vm-pushes-images" {
 data "template_file" "gke-admin-vm" {
   template = file("gke-admin-vm.sh.tpl")
   vars = {
-    GCP_PROJECT = var.project_id
-    GCP_ZONE = var.zone
+    GCP_PROJECT  = var.project_id
+    GCP_ZONE     = var.zone
     CLUSTER_NAME = "${var.tenant}-demo"
-    tenant = var.tenant
+    tenant       = var.tenant
   }
 }
