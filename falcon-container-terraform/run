@@ -37,6 +37,7 @@ if [ -z "$(gcloud config get-value project 2> /dev/null)" ]; then
    fi
 fi
 export TF_VAR_project_id=$(gcloud config get-value project 2> /dev/null)
+gcloud services enable containerregistry.googleapis.com
 
 
 [ -d ~/cloud-gcp ] || (cd "$HOME" && git clone --depth 1 https://github.com/crowdstrike/cloud-gcp)
