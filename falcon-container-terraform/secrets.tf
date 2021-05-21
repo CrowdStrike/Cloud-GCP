@@ -1,23 +1,30 @@
 variable "falcon_client_id" {
   description = "CrowdStrike Falcon / OAuth2 API / Client ID (needs only permissions to download falcon container sensor) (Alternatively, set env variable TF_VAR_falcon_client_id)"
+  sensitive   = true
 }
 
 variable "falcon_client_secret" {
   description = "CrowdStrike Falcon / OAuth2 API / Client Secret (needs only permissions to download falcon container sensor) (Alternatively, set env variable TF_VAR_falcon_client_secret)"
+  sensitive   = true
 }
 
 variable "falcon_cloud" {
   description = "Falcon cloud region abbreviation (us-1, us-2, eu-1, us-gov-1) (Alternatively, set env variable TF_VAR_falcon_cloud)"
+  validation {
+    condition     = (var.falcon_cloud == "us-1" || var.falcon_cloud == "us-2" || var.falcon_cloud == "eu-1" || var.falcon_cloud == "us-gov-1")
+    error_message = "Variable falcon_cloud must be set to one of: us-1, us-2, eu-1, us-gov-1."
+  }
 }
 
 variable "falcon_cid" {
   description = "CrowdStrike Falcon CID (full cid string) (Alternatively, set env variable TF_VAR_falcon_cid)"
+  sensitive   = true
 }
 
 
 resource "google_project_service" "secretmanager" {
-  provider = google
-  service  = "secretmanager.googleapis.com"
+  provider           = google
+  service            = "secretmanager.googleapis.com"
   disable_on_destroy = false
 }
 
