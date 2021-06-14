@@ -9,7 +9,7 @@ Note: In Kubernetes clusters where kernel module loading is supported by the wor
 
  * CrowdStrike Falcon Container Sensor
    - [Implementation Guide for GKE](gke-implementation-guide.md)
-   * [Terraform to for demoing Container Sensor in GKE](falcon-container-terraform)
+   * [Terraform for demoing Container Sensor in GKE](falcon-container-terraform)
 
 ## Additional Resources
  - CrowdStrike Container Security: [Product Page](https://www.crowdstrike.com/products/cloud-security/falcon-cloud-workload-protection/container-security/)
