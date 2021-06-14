@@ -7,8 +7,9 @@ To protect container and Kubernetes workloads choose between the following appro
 
 Note: In Kubernetes clusters where kernel module loading is supported by the worker node OS, we recommend using Falcon sensor for Linux to secure both worker nodes and containers with a single sensor.
 
- - Falcon Sensor for Linux - deploying kernel-mode agent directly to the nodes
-   - [Implementation Guide - Using Helm Charts in Azure AKS](kernel-aks-implementation-guide.md)
+ * CrowdStrike Falcon Container Sensor
+   - [Implementation Guide for GKE](gke-implementation-guide.md)
+   * [Terraform to for demoing Container Sensor in GKE](falcon-container-terraform)
 
 ## Additional Resources
  - CrowdStrike Container Security: [Product Page](https://www.crowdstrike.com/products/cloud-security/falcon-cloud-workload-protection/container-security/)
