@@ -1,4 +1,4 @@
-# Terraform to demo Falcon Container Runtime Protection
+c# Terraform to demo Falcon Container Runtime Protection
 
 [![Open in Cloud Shell](https://img.shields.io/badge/Google%20Cloud%20Shell-Clone-5391FE?style=for-the-badge&logo=gnu-bash&logoColor=white)](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/crowdstrike/cloud-gcp&shellonly=true)
 
@@ -29,7 +29,7 @@ User then may
  - Verify that your identity in upper right corner is correct)
  - Paste the following to your cloud shell
 ```
-bash -c 'source <(curl -s https://raw.githubusercontent.com/crowdstrike/cloud-gcp/main/falcon-container-terraform/run)'
+bash -c 'source <(curl -s https://raw.githubusercontent.com/crowdstrike/cloud-gcp/main/container/falcon-container-terraform/run)'
 ```
 
 ### Tear Down
