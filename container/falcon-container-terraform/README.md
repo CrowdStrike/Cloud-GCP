@@ -29,7 +29,7 @@ User then may
  - Verify that your identity in upper right corner is correct)
  - Paste the following to your cloud shell
 ```
-bash -c 'source <(curl -s https://raw.githubusercontent.com/crowdstrike/cloud-gcp/main/falcon-container-terraform/run)'
+bash -c 'source <(curl -s https://raw.githubusercontent.com/crowdstrike/cloud-gcp/main/container/falcon-container-terraform/run)'
 ```
 
 ### Tear Down
