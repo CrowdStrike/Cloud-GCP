@@ -141,7 +141,7 @@ detection_uri(){
     echo "  # to get all running pods on the cluster"
     echo "  sudo kubectl get pods --all-namespaces"
     echo "  # to get Falcon agent/host ID of vulnerable.example.com"
-    echo "  sudo kubectl exec deploy/vulnerable.example.com -c falcon-container -- falconctl -g --aid"
+    echo "  sudo kubectl exec deploy/vulnerable.example.com -c crowdstrike-falcon-container -- falconctl -g --aid"
     echo "  # to view Falcon injector logs"
     echo "  sudo kubectl logs -n falcon-system deploy/injector"
     echo "  # to uninstall the vulnerable.example.com"
