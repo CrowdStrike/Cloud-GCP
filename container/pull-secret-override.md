@@ -31,8 +31,9 @@ Generate a new key for the service account
 
 Generate Falcon Container Pull secret
 ```
-    cp ~/.docker/config.json{,.bac}
+    mv ~/.docker/config.json{,.bac}
     cat  key.json | docker login --username "_json_key" --password-stdin https://gcr.io
     IMAGE_PULL_TOKEN=$(cat ~/.docker/config.json | base64 -w 0)
-    cp ~/.docker/config.json{.bac,}
+    rm ~/.docker/config.json
+    mv ~/.docker/config.json{.bac,}
 ```
