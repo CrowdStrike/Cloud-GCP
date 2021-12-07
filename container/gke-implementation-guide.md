@@ -129,7 +129,8 @@ Various command-line utilities are required for this demo. The utilities can eit
    NAME         LOCATION    MASTER_VERSION    MASTER_IP     MACHINE_TYPE  NODE_VERSION      NUM_NODES  STATUS
    gke-cluster  us-east1-b  1.17.14-gke.1600  12.345.15.12  e2-medium     1.17.14-gke.1600  3          RUNNING
    ```
-
+ - Once the cluster is created, before accessing the cluster, run the command ```gcloud container clusters get-credentials <cluster name>``` , which will update the ```kubeconfig``` file with credentials and endpoint information to point ```kubectl``` to the newly created cluster.
+ 
  - (optional) Verify that your local kubectl utility has been configured to connect to the cluster.
    ```
    $ kubectl cluster-info 
