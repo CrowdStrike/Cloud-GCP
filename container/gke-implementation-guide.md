@@ -180,40 +180,16 @@ Various command-line utilities are required for this demo. The utilities can eit
    Docker configuration file updated.
    ```
 
-    - Save desired image location to environment variable. The variable will be used in the sections that follow.
-   ```
-   FALCON_IMAGE_URI="gcr.io/$PROJECT/falcon-sensor:latest"
-   ```
-
 ### Step 4: Push the falcon sensor image to the Repository
 
- - Obtain the falcon-sensor container tarball.
+ - Save desired image location to environment variable. The variable will be used in the sections that follow.
    ```
-   $ falcon_sensor_download --os-name=Container
-   Please provide your Falcon Client ID: ABC
-   Please provide your Falcon Client Secret: XYZ
-   Downloaded Falcon Usermode Container Sensor to falcon-sensor-6.18.0-106.container.x86_64.tar.bz2
+   FALCON_IMAGE_URI="gcr.io/$PROJECT/falcon-sensor"
    ```
- - Import the tarball to your local docker. If you are following this guide inside the tooling
-   container, you can run this command outside of the container as the docker socket is shared
-   between your host system and the said tooling container.
+
+ - Push Falcon Container image to your newly created repository
    ```
-   $ docker load -i falcon-sensor-6.18.0-106.container.x86_64.tar.bz2
-   30cbe59c0010: Loading layer  39.07MB/39.07MB
-   Loaded image: falcon-sensor:6.18.0-106.container.x86_64.Release.Beta
-   ```
- - Tag the image
-   ```
-   $ docker tag falcon-sensor:6.18.0-106.container.x86_64.Release.Beta $FALCON_IMAGE_URI
-   ```
- - Push the image to Google Cloud Image registry
-   ```
-   $ docker push $FALCON_IMAGE_URI 
-   Using default tag: latest
-   The push refers to repository [gcr.io/example-integration-lab/falcon-sensor]
-   30cbe59c0010: Pushing [==================================================>]  39.07MB
-   30cbe59c0010: Pushed 
-   latest: digest: sha256:e14904d6fd47a8395304cd33a0d650c2b924f1241f0b3561ece8a515c87036df size: 529
+   falcon-container-sensor-push $FALCON_IMAGE_URI
    ```
 
 ### Step 5: Install The Admission Controller
