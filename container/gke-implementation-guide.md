@@ -4,6 +4,12 @@ This guide works through creation of new GKE cluster, deployment of Falcon Conta
 
 Time needed to follow this guide: 45 minutes.
 
+## Alternatives
+
+This guide describes manual deployment method. There are two other alternative methods of installation available
+
+ - installation using [Falcon Operator](https://github.com/CrowdStrike/falcon-operator/) - Falcon Operator allows you to deploy the sensor only using two commands: one to deploy the operator, second one to deploy the sensor. If your organisation has already adopted concept of kubernetes operators OR if you are just trying to install on a throw away cluster, we recommend going this route. Mainly for its ease.
+ - installation using [Falcon Helm](https://github.com/CrowdStrike/falcon-helm) - If you organization has adopted concept of the helm packaging system on kubernetes, you may find it easier to use falcon-helm chart to deploy the sensor.
 
 ## Overview
 
@@ -22,6 +28,13 @@ The Falcon Container sensor for Linux extends runtime security to container work
 > **Falcon Container Sensor for GKE is available as a technology preview.**
 
 > **Note: In Kubernetes clusters where kernel module loading is supported by the worker node OS, we recommend using Falcon sensor for Linux to secure both worker nodes and containers with a single sensor.**
+
+## CrowdStrike Falcon Credentials
+
+You will need to provide CrowdStrike API Keys and CrowdStrike cloud region during the installation. It is recommended to establish new API credentials for the installation at https://falcon.crowdstrike.com/support/api-clients-and-keys, krequired permissions are:
+
+ - Falcon Images Download: Read
+ - Sensor Download: Read
 
 
 ## Pre-requisites
