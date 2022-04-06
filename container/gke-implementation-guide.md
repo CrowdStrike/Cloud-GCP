@@ -23,6 +23,13 @@ The Falcon Container sensor for Linux extends runtime security to container work
 
 > **Note: In Kubernetes clusters where kernel module loading is supported by the worker node OS, we recommend using Falcon sensor for Linux to secure both worker nodes and containers with a single sensor.**
 
+## CrowdStrike Falcon Credentials
+
+You will need to provide CrowdStrike API Keys and CrowdStrike cloud region during the installation. It is recommended to establish new API credentials for the installation at https://falcon.crowdstrike.com/support/api-clients-and-keys, krequired permissions are:
+
+ - Falcon Images Download: Read
+ - Sensor Download: Read
+
 
 ## Pre-requisites
 
