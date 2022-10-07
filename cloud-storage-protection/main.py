@@ -88,16 +88,15 @@ def bucket_scan(event, _):
         blob = bucket.blob(file_name)
         blob_data = blob.download_as_bytes()
         # Upload the file to the CrowdStrike Falcon Sandbox
-        try:
-            response = Samples.upload_sample(
-                file_name=file_name,
-                file_data=io.BytesIO(blob_data)
-                )
-            log.info("File uploaded to CrowdStrike Falcon Sandbox.")
-        except Exception as upload_error:
-            print(f"Error uploading object {file_name} from bucket {bucket_name} to Falcon X Sandbox. "
+        response = Samples.upload_sample(
+            file_name=file_name,
+            file_data=io.BytesIO(blob_data),
+        )
+        if response["status_code"] > 201:
+            raise SystemExit(f"Error uploading object {file_name} from bucket {bucket_name} to Falcon X Sandbox. "
                   "Make sure your API key has the Sample Uploads permission.")
-            raise upload_error
+        else:
+            log.info("File uploaded to CrowdStrike Falcon Sandbox.")
 
         # Quick Scan
         try:
@@ -186,22 +185,3 @@ def bucket_scan(event, _):
         msg = f"File ({file_name}) exceeds maximum file scan size ({MAX_FILE_SIZE} bytes), skipped."
         log.warning(msg)
         return msg
-
-
-
-
-    #           ██████
-    #         ██      ██
-    #         ██    ████
-    #         ██  ██▓▓████░░
-    #         ████▓▓░░██  ██░░░░
-    #         ██▓▓░░░░██░░░░██░░░░░░
-    #       ██▓▓░░░░██░░██▒▒▓▓██░░░░░░     Let's pour out
-    #     ██▓▓░░░░  ░░██▒▒▓▓▓▓████░░░░        the spoiled bits.
-    #   ██▓▓░░░░  ░░░░▒▒▓▓▓▓████  ░░░░░░
-    #   ██░░░░  ░░░░▒▒▓▓▓▓████    ░░░░░░
-    #   ██░░  ░░░░▒▒▒▒▓▓████        ░░░░
-    #     ██░░░░▒▒▓▓▓▓████        ░░░░░░
-    #       ██▒▒▓▓▓▓████          ░░░░
-    #         ██▓▓████            ░░░░
-    #           ████              ░░
