@@ -14,19 +14,18 @@ import google.cloud.logging
 from google.cloud import storage
 # FalconPy SDK - Auth, Sample Uploads and Quick Scan
 from falconpy import OAuth2, SampleUploads, QuickScan  # pylint: disable=E0401
-# from functions import generate_manifest, send_to_security_hub
 
 # Maximum file size for scan (35mb)
 MAX_FILE_SIZE = 36700160
 
 # GCP Logging Client
 gcp_logging_client = google.cloud.logging.Client()
+# Configure GCP Logging to utilize standard python logging
 gcp_logging_client.setup_logging()
-# GCP Logging client uses Python logging
 log = logging.getLogger()
 log.setLevel(logging.INFO)
 
-# GCP Handlers
+# GCP Storage handler
 gcs = storage.Client()
 
 # Current region
@@ -38,7 +37,7 @@ MITIGATE = bool(json.loads(os.environ.get("MITIGATE_THREATS", "TRUE").lower()))
 # Base URL
 BASE_URL = os.environ.get("BASE_URL", "https://api.crowdstrike.com")
 
-# Grab our SSM parameter store variable names from the environment if they exist
+# Grab our Falcon API creds from the environment if they exist
 try:
     client_id = os.environ["FALCON_CLIENT_ID"]
 except KeyError:
@@ -48,20 +47,6 @@ try:
     client_secret = os.environ["FALCON_CLIENT_SECRET"]
 except KeyError:
     raise SystemExit("FALCON_CLIENT_SECRET environment variable not set")
-
-# Grab our Falcon API credentials from SSM Parameter Store
-# try:
-#     ssm_response = ssm.get_parameters(Names=[CLIENT_ID_PARAM_NAME, CLIENT_SEC_PARAM_NAME],
-#                                       WithDecryption=True
-#                                       )
-#     client_id = ssm_response['Parameters'][0]['Value']
-#     client_secret = ssm_response['Parameters'][1]['Value']
-
-# except IndexError as no_creds:
-#     raise SystemExit("Unable to retrieve CrowdStrike Falcon API credentials.") from no_creds
-
-# except KeyError as bad_creds:
-#     raise SystemExit("Unable to retrieve CrowdStrike Falcon API credentials.") from bad_creds
 
 # Authenticate to the CrowdStrike Falcon API
 auth = OAuth2(creds={
@@ -83,7 +68,6 @@ def bucket_scan(event, _):
     file_name = urllib.parse.unquote_plus(event["name"], encoding="utf-8")
     upload_file_size = int(event["size"])
     if upload_file_size < MAX_FILE_SIZE:
-        log.info("File size is less than 35mb, scanning file.")
         # Get the file from GCP
         blob = bucket.blob(file_name)
         blob_data = blob.download_as_bytes()
@@ -138,10 +122,6 @@ def bucket_scan(event, _):
                 elif "malware" in result["verdict"]:
                     # Mitigation would trigger from here
                     scan_msg = f"Verdict for {file_name}: {result['verdict']}"
-                    # detection = {}
-                    # detection["sha"] = upload_sha
-                    # detection["bucket"] = bucket_name
-                    # detection["file"] = file_name
                     log.warning(scan_msg)
                     threat_removed = False
                     if MITIGATE:
@@ -161,9 +141,6 @@ def bucket_scan(event, _):
 
                     if threat_removed:
                         log.info("Threat %s removed from bucket %s", file_name, bucket_name)
-                    # Inform Security Hub of the threat and our mitigation status
-                    # manifest = generate_manifest(detection, region, threat_removed)
-                    # _ = send_to_security_hub(manifest, region)
                 else:
                     # Unrecognized response
                     scan_msg = f"Unrecognized response ({result['verdict']}) received from API for {file_name}."
