@@ -13,6 +13,7 @@ all_done(){
     echo '╰╯╱╰┻━━━┻━━━╯╰━━━┻━━━┻╯╱╰━┻━━━╯'
     echo -e "$NC"
 }
+
 env_destroyed(){
     echo -e "$RD"
     echo '╭━━━┳━━━┳━━━┳━━━━┳━━━┳━━━┳╮╱╱╭┳━━━┳━━━╮'
@@ -24,16 +25,8 @@ env_destroyed(){
     echo -e "$NC"
 }
 
-
-echo -e "\nThis script should be executed from the cloud-storage-protection root directory.\n"
-if [ -z "$1" ]
-then
-   echo "You must specify 'up' or 'down' to run this script"
-   exit 1
-fi
-MODE=$(echo "$1" | tr [:upper:] [:lower:])
-if [[ "$MODE" == "up" ]]
-then
+# GCP Project ID
+gcp_get_project_id() {
     # Get the GCP project ID
     if [ -z "$(gcloud config get-value project 2> /dev/null)" ]; then
         project_ids=$(gcloud projects list --format json | jq -r '.[].projectId')
@@ -47,20 +40,93 @@ then
             exit 1
         fi
     fi
-    PROJECT_ID=$(gcloud config get-value project 2> /dev/null)
+    echo "$(gcloud config get-value project 2> /dev/null)"
+}
+
+### API FALCON CLOUD LOGIC ###
+cs_cloud() {
+    case "${cs_falcon_cloud}" in
+        us-1)      echo "api.crowdstrike.com";;
+        us-2)      echo "api.us-2.crowdstrike.com";;
+        eu-1)      echo "api.eu-1.crowdstrike.com";;
+        us-gov-1)  echo "api.laggar.gcw.crowdstrike.com";;
+        *)         die "Unrecognized Falcon Cloud: ${cs_falcon_cloud}";;
+    esac
+}
+
+json_value() {
+    KEY=$1
+    num=$2
+    awk -F"[,:}]" '{for(i=1;i<=NF;i++){if($i~/'"$KEY"'\042/){print $(i+1)}}}' | tr -d '"' | sed -n "${num}p"
+}
+
+die() {
+    echo -e "$RD"
+    echo "Error: $*" >&2
+    echo -e "$NC"
+    exit 1
+}
+
+cs_verify_auth() {
+    if ! command -v curl > /dev/null 2>&1; then
+        die "The 'curl' command is missing. Please install it before continuing. Aborting..."
+    fi
+    token_result=$(echo "client_id=$FID&client_secret=$FSECRET" | \
+                curl -X POST -s -L "https://$(cs_cloud)/oauth2/token" \
+                    -H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8' \
+                    --dump-header "${response_headers}" \
+                    --data @-)
+    token=$(echo "$token_result" | json_value "access_token" | sed 's/ *$//g' | sed 's/^ *//g')
+    if [ -z "$token" ]; then
+        die "Unable to obtain CrowdStrike Falcon OAuth Token. Response was $token_result"
+    fi
+}
+
+cs_set_base_url() {
+    region_hint=$(grep -i ^x-cs-region: "$response_headers" | head -n 1 | tr '[:upper:]' '[:lower:]' | tr -d '\r' | sed 's/^x-cs-region: //g')
+    if [ -z "${region_hint}" ]; then
+        die "Unable to obtain region hint from CrowdStrike Falcon OAuth API, something went wrong."
+    fi
+    cs_falcon_cloud="${region_hint}"
+}
+
+# Ensure script is ran in cloud-storage-protection directory
+[[ -d demo ]] && [[ -d cloud-function ]] || die "Please run this script from the cloud-storage-protection root directory"
+
+if [ -z "$1" ]
+then
+   echo "You must specify 'up' or 'down' to run this script"
+   exit 1
+fi
+MODE=$(echo "$1" | tr [:upper:] [:lower:])
+if [[ "$MODE" == "up" ]]
+then
+    # Get the GCP project ID
+    PROJECT_ID=$(gcp_get_project_id)
     echo "--------------------------------------------------"
-    echo "      Using GCP project ID: $PROJECT_ID"
+    echo "Using GCP project ID: $PROJECT_ID"
     echo "--------------------------------------------------"
 	read -sp "CrowdStrike API Client ID: " FID
 	echo
 	read -sp "CrowdStrike API Client SECRET: " FSECRET
+    echo
 
     # Make sure variables are not empty
     if [ -z "$FID" ] || [ -z "$FSECRET" ]
     then
-        echo "You must specify a valid CrowdStrike API Client ID and SECRET"
-        exit 1
+        die "You must specify a valid CrowdStrike API Client ID and SECRET"
     fi
+
+    # Verify the CrowdStrike API credentials
+    echo "Verifying CrowdStrike API credentials..."
+    cs_falcon_cloud="us-1"
+    response_headers=$(mktemp)
+    cs_verify_auth
+    # Get the base URL for the CrowdStrike API
+    cs_set_base_url
+    echo "Falcon Cloud URL set to: $(cs_cloud)"
+    # Cleanup tmp file
+    rm "${response_headers}"
 
     UNIQUE=$(echo $RANDOM | md5sum | sed "s/[[:digit:].-]//g" | head -c 8)
     # Initialize Terraform
@@ -69,8 +135,8 @@ then
     fi
     # Apply Terraform
 	terraform -chdir=demo apply -compact-warnings --var falcon_client_id=$FID \
-		--var falcon_client_secret=$FSECRET --var project=$PROJECT_ID \
-        --var unique_id=$UNIQUE --auto-approve
+		--var falcon_client_secret=$FSECRET --var project_id=$PROJECT_ID \
+        --var base_url=$(cs_cloud) --var unique_id=$UNIQUE --auto-approve
     echo -e "$RD\nPausing for 30 seconds to allow configuration to settle.$NC"
     sleep 30
     all_done
@@ -83,5 +149,4 @@ then
     env_destroyed
 	exit 0
 fi
-echo "Invalid command specified."
-exit 1
+die "Invalid command specified."
