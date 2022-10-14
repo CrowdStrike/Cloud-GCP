@@ -1,6 +1,6 @@
 #!/bin/bash
-DG="\033[1;30m"
-RD="\033[0;31m"
+RD="\033[1;31m"
+GRN="\033[1;33m"
 NC="\033[0;0m"
 LB="\033[1;34m"
 all_done(){
@@ -137,7 +137,7 @@ then
 	terraform -chdir=demo apply -compact-warnings --var falcon_client_id=$FID \
         --var falcon_client_secret=$FSECRET --var project_id=$PROJECT_ID \
         --var base_url=$(cs_cloud) --var unique_id=$UNIQUE --auto-approve
-    echo -e "$RD\nPausing for 30 seconds to allow configuration to settle.$NC"
+    echo -e "$GRN\nPausing for 30 seconds to allow configuration to settle.$NC"
     sleep 30
     all_done
 	exit 0
