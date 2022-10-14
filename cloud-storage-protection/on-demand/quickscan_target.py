@@ -11,7 +11,7 @@
  `----|:.`-------`---`-------`--- ---'  `-------`-------`--- ---`--- ---'  `--- ---`---'   `---'
       `--'
 
-Scans a S3 bucket using the CrowdStrike Falcon Quick Scan and Sample Uploads APIs.
+Scans a storage bucket using the CrowdStrike Falcon Quick Scan and Sample Uploads APIs.
 
 Created // 04.12.21: jshcodes@CrowdStrike - In order to proceed, please insert 16oz of coffee.
 Modified // 12.22.21: jshcodes@CrowdStrike - Stand-alone bucket scanner conversion.

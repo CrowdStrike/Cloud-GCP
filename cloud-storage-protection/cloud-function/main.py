@@ -61,7 +61,7 @@ Scanner = QuickScan(auth_object=auth)
 
 
 # Main routine
-def bucket_scan(event, _):
+def cs_bucket_protection(event, _):
     """GCP Cloud Functions entry point"""
     bucket_name = event["bucket"]
     bucket = gcs.get_bucket(bucket_name)

@@ -5,19 +5,22 @@ NC="\033[0;0m"
 LB="\033[1;34m"
 all_done(){
     echo -e "$LB"
-    echo '  __                        _'
-    echo ' /\_\/                   o | |             |'
-    echo '|    | _  _  _    _  _     | |          ,  |'
-    echo '|    |/ |/ |/ |  / |/ |  | |/ \_|   |  / \_|'
-    echo ' \__/   |  |  |_/  |  |_/|_/\_/  \_/|_/ \/ o'
+    echo '╭━━━┳╮╱╱╭╮╱╱╱╭━━━┳━━━┳━╮╱╭┳━━━╮'
+    echo '┃╭━╮┃┃╱╱┃┃╱╱╱╰╮╭╮┃╭━╮┃┃╰╮┃┃╭━━╯'
+    echo '┃┃╱┃┃┃╱╱┃┃╱╱╱╱┃┃┃┃┃╱┃┃╭╮╰╯┃╰━━╮'
+    echo '┃╰━╯┃┃╱╭┫┃╱╭╮╱┃┃┃┃┃╱┃┃┃╰╮┃┃╭━━╯'
+    echo '┃╭━╮┃╰━╯┃╰━╯┃╭╯╰╯┃╰━╯┃┃╱┃┃┃╰━━╮'
+    echo '╰╯╱╰┻━━━┻━━━╯╰━━━┻━━━┻╯╱╰━┻━━━╯'
     echo -e "$NC"
 }
 env_destroyed(){
     echo -e "$RD"
-    echo ' ___                              __,'
-    echo '(|  \  _  , _|_  ,_        o     /  |           __|_ |'
-    echo ' |   ||/ / \_|  /  | |  |  |    |   |  /|/|/|  |/ |  |'
-    echo '(\__/ |_/ \/ |_/   |/ \/|_/|/    \_/\_/ | | |_/|_/|_/o'
+    echo '╭━━━┳━━━┳━━━┳━━━━┳━━━┳━━━┳╮╱╱╭┳━━━┳━━━╮'
+    echo '╰╮╭╮┃╭━━┫╭━╮┃╭╮╭╮┃╭━╮┃╭━╮┃╰╮╭╯┃╭━━┻╮╭╮┃'
+    echo '╱┃┃┃┃╰━━┫╰━━╋╯┃┃╰┫╰━╯┃┃╱┃┣╮╰╯╭┫╰━━╮┃┃┃┃'
+    echo '╱┃┃┃┃╭━━┻━━╮┃╱┃┃╱┃╭╮╭┫┃╱┃┃╰╮╭╯┃╭━━╯┃┃┃┃'
+    echo '╭╯╰╯┃╰━━┫╰━╯┃╱┃┃╱┃┃┃╰┫╰━╯┃╱┃┃╱┃╰━━┳╯╰╯┃'
+    echo '╰━━━┻━━━┻━━━╯╱╰╯╱╰╯╰━┻━━━╯╱╰╯╱╰━━━┻━━━╯'
     echo -e "$NC"
 }
 
@@ -31,21 +34,43 @@ fi
 MODE=$(echo "$1" | tr [:upper:] [:lower:])
 if [[ "$MODE" == "up" ]]
 then
+    # Get the GCP project ID
+    if [ -z "$(gcloud config get-value project 2> /dev/null)" ]; then
+        project_ids=$(gcloud projects list --format json | jq -r '.[].projectId')
+        project_count=$(wc -w <<< "$project_ids")
+        if [ "$project_count" == "1" ]; then
+            gcloud config set project "$project_ids"
+        else
+            gcloud projects list
+            echo "Multiple pre-existing GCP projects found. Please select project using the following command before re-trying"
+            echo "  gcloud config set project VALUE"
+            exit 1
+        fi
+    fi
+    PROJECT_ID=$(gcloud config get-value project 2> /dev/null)
+    echo "--------------------------------------------------"
+    echo "      Using GCP project ID: $PROJECT_ID"
+    echo "--------------------------------------------------"
 	read -sp "CrowdStrike API Client ID: " FID
 	echo
 	read -sp "CrowdStrike API Client SECRET: " FSECRET
-	echo -e "\nThe following values are not required for the integration, only the demo."
-	read -p "EC2 Instance Key Name: " ECKEY
-	read -p "Trusted IP address: " TRUSTED
+
+    # Make sure variables are not empty
+    if [ -z "$FID" ] || [ -z "$FSECRET" ]
+    then
+        echo "You must specify a valid CrowdStrike API Client ID and SECRET"
+        exit 1
+    fi
+
     UNIQUE=$(echo $RANDOM | md5sum | sed "s/[[:digit:].-]//g" | head -c 8)
-    rm lambda/falconpy-layer.zip >/dev/null 2>&1
-    curl -o lambda/falconpy-layer.zip https://falconpy.io/downloads/falconpy-layer.zip
+    # Initialize Terraform
     if ! [ -f demo/.terraform.lock.hcl ]; then
         terraform -chdir=demo init
     fi
+    # Apply Terraform
 	terraform -chdir=demo apply -compact-warnings --var falcon_client_id=$FID \
-		--var falcon_client_secret=$FSECRET --var instance_key_name=$ECKEY \
-		--var trusted_ip=$TRUSTED/32 --var unique_id=$UNIQUE --auto-approve
+		--var falcon_client_secret=$FSECRET --var project=$PROJECT_ID \
+        --var unique_id=$UNIQUE --auto-approve
     echo -e "$RD\nPausing for 30 seconds to allow configuration to settle.$NC"
     sleep 30
     all_done
@@ -53,11 +78,10 @@ then
 fi
 if [[ "$MODE" == "down" ]]
 then
+    # Destroy Terraform
 	terraform -chdir=demo destroy -compact-warnings --auto-approve
-    rm lambda/quickscan-bucket.zip
     env_destroyed
 	exit 0
 fi
 echo "Invalid command specified."
 exit 1
-

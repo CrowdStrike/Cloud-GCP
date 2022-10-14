@@ -5,7 +5,7 @@
 # Existing bucket configuration
 This solution will leverage Terraform to apply CrowdStrike S3 Bucket Protection to an existing bucket.
 
-> Please note: If you use the `existing.sh` helper script provided in the root folder for this integration, you should not need to modify these files unless you want to change the region the solution is deployed to. The default region for this solution is `us-east-2` which should match the region where the bucket resides.
+> Please note: If you use the `existing.sh` helper script provided in the root folder for this integration, you should not need to modify these files unless you want to change the region the solution is deployed to. The default region for this solution is `us-central1` which should match the region where the bucket resides.
 
 ## Contents
 

@@ -16,22 +16,22 @@ as part of the environment configuration process, including sample files and com
 
 ## Contents
 
-+ `bucket.tf` - The configuration details for the bucket and it's event triggers.
++ `bucket.tf` - The configuration details for the bucket.
 + `iam.tf` - The IAM roles and permissions used by the integration and demonstration.
 + `instance.tf` - The demonstration instance configuration.
-+ `lambda-function.tf` - The S3 Bucket Protection lambda handler configuration.
++ `cloud-function.tf` - The CS Bucket Protection function configuration and it's event triggers.
 + `output.tf` - The values output by Terraform after the stand-up process completes.
-+ `region.tf` - The AWS region the demonstration will deploy to. Edit the region variable to change this to another region.
-+ `ssm.tf` - The AWS Systems Manager Parameter Store parameters used by the integration.
++ `region.tf` - The GCP region the demonstration will deploy to. Edit the region variable to change this to another region.
++ `ssm.tf` - The GCP Secret Manager secrets used by the integration.
 + `variables.tf` - User customizable values used by the integration and demonstrations.
 + `vpc.tf` - The AWS VPC configuration for the demonstration environment.
 
-> Please note: If you use the `demo.sh` helper script provided in the root folder for this integration, you should not need to modify these files unless you want to change the region the demonstration is deployed to. The default region for this demonstration is `us-east-2`.
+> Please note: If you use the `demo.sh` helper script provided in the root folder for this integration, you should not need to modify these files unless you want to change the region the demonstration is deployed to. The default region for this demonstration is `us-central1`.
 
 ## Requirements
 
 + AWS account access with appropriate CLI keys and permissions already configured.
-+ The pre-existing PEM key for SSH access to the demonstration instance. This key must exist within the region your demonstration stands up in. (Default: `us-east-2`)
++ The pre-existing PEM key for SSH access to the demonstration instance. This key must exist within the region your demonstration stands up in. (Default: `us-central1`)
     - You will be asked for the name of this key when the `demo.sh` script executes.
 + CrowdStrike Falcon API credentials with the following scopes:
     - MalQuery - `READ` (used to download malware samples)

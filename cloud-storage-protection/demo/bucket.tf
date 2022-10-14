@@ -1,15 +1,14 @@
-resource "aws_s3_bucket" "bucket" {
-  bucket = "${var.unique_id}-${var.bucket_name}" 
+# GCP Cloud Storage Bucket Terraform
+# Bucket used for uploading files to be scanned by the Cloud Function
+resource "google_storage_bucket" "bucket" {
+  name          = "${var.unique_id}-${var.bucket_name}"
+  location      = var.region
   force_destroy = true
 }
 
-resource "aws_s3_bucket_notification" "bucket_notification" {
-  bucket = aws_s3_bucket.bucket.id
-
-  lambda_function {
-    lambda_function_arn = aws_lambda_function.func.arn
-    events              = ["s3:ObjectCreated:*"]
-  }
-
-  depends_on = [aws_lambda_permission.allow_bucket]
+# Bucket used for uploading archived cloud function
+resource "google_storage_bucket" "function_bucket" {
+  name          = "${var.unique_id}-function"
+  location      = var.region
+  force_destroy = true
 }
