@@ -135,7 +135,7 @@ then
     fi
     # Apply Terraform
 	terraform -chdir=demo apply -compact-warnings --var falcon_client_id=$FID \
-		--var falcon_client_secret=$FSECRET --var project_id=$PROJECT_ID \
+        --var falcon_client_secret=$FSECRET --var project_id=$PROJECT_ID \
         --var base_url=$(cs_cloud) --var unique_id=$UNIQUE --auto-approve
     echo -e "$RD\nPausing for 30 seconds to allow configuration to settle.$NC"
     sleep 30
