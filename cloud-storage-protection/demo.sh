@@ -99,13 +99,16 @@ configure_cloud_shell() {
     mkdir $TESTS ~/.cloudshell
     touch ~/.cloudshell/no-apt-get-warning
     # SAFE EXAMPLES
+    echo -e "Downloading safe sample files...\n"
     wget -q -O $TESTS/unscannable1.png https://adversary.crowdstrike.com/assets/images/Adversaries_Ocean_Buffalo.png
     wget -q -O $TESTS/unscannable2.jpg https://www.crowdstrike.com/blog/wp-content/uploads/2018/04/April-Adversary-Stardust.jpg
     sudo cp /usr/bin/whoami $TESTS/safe1.bin
     sudo cp /usr/sbin/ifconfig $TESTS/safe2.bin
     # MALICIOUS EXAMPLES
-    sudo DEBIAN_FRONTEND=noninteractive apt-get install -qq p7zip-full < /dev/null > /dev/null
+    echo -e "Malicious file prep...\n"
+    sudo apt-get install -y p7zip-full
     [[ -d /tmp/malicious ]] || mkdir /tmp/malicious
+    echo -e "Downloading malicious sample files...\n"
     # PDF Lazarus https://bazaar.abuse.ch/sample/2b4e8f1927927bdc2f71914ba1f12511d9b6bdbdb2df390e267f54dc4f8919dd/
     wget -q -O /tmp/malicious/malwarepdf.zip --post-data "query=get_file&sha256_hash=2b4e8f1927927bdc2f71914ba1f12511d9b6bdbdb2df390e267f54dc4f8919dd" https://mb-api.abuse.ch/api/v1/
     7z x /tmp/malicious/malwarepdf.zip -o/tmp/malicious -pinfected
@@ -115,6 +118,7 @@ configure_cloud_shell() {
     7z x /tmp/malicious/malwaredocx.zip -o/tmp/malicious -pinfected
     mv /tmp/malicious/*.doc $TESTS/malicious2.doc
     # Helper scripts
+    echo -e "Copying helper functions...\n"
     sudo cp ./bin/get-findings.sh /usr/local/bin/get-findings
     sudo sed -i "s/FUNCTION/${FUNCTION_NAME}/g" /usr/local/bin/get-findings
     sudo cp ./bin/upload.sh /usr/local/bin/upload
@@ -188,7 +192,7 @@ fi
 if [[ "$MODE" == "down" ]]
 then
     # Destroy Terraform
-	terraform -chdir=demo destroy -compact-warnings --auto-approve
+	terraform -chdir=demo destroy -compact-warnings --auto-approve || die "Something went wrong. Wait a few seconds, then try again."
     sudo rm /usr/local/bin/get-findings /usr/local/bin/upload /usr/local/bin/list-bucket
     rm -rf $TESTS /tmp/malicious
     env_destroyed

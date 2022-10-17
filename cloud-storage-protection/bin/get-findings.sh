@@ -1,3 +1,3 @@
 #!/bin/sh
 echo -e "Output from Cloud Functions logs:"
-gcloud functions logs read FUNCTION --limit=10 --min-log-level=info
+gcloud functions logs read FUNCTION --min-log-level=info | egrep 'Threat|Verdict'
