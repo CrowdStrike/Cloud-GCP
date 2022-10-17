@@ -1,7 +1,9 @@
 # GCP Bucket Protection Demonstration
 <walkthrough-tutorial-duration duration="10"></walkthrough-tutorial-duration>
 This demonstration leverages Terraform to provide a functional demonstration of this integration. All of the necessary resources for using this solution to protect a GCP Cloud Storage bucket are implemented for you as part of the environment configuration process, including sample files and command line helper scripts.
+
 <walkthrough-project-setup></walkthrough-project-setup>
+
 ## Prerequisites
 ### GCP Services
 In order to properly use this demo, run the following helper script to enable the appropriate GCP services:
@@ -17,13 +19,13 @@ Assign the following scopes:
 > You will be asked to provide these credentials when the `demo.sh` script executes.
 
 ## Let's Get Started
-Execute the following command to stand up the demonstration.
+Execute the following command to stand up the demonstration:
+
+***Please note that the input for your credentials are hidden.***
 ```sh
 ./demo.sh up
 ```
 You will be asked to provide your CrowdStrike API credentials.
-
-**\*Please note that the input for your credentials are hidden.**
 
 If this is the first time you're executing the demonstration, Terraform will initialize the working folder after you submit these values. After this process completes, Terraform will begin to stand-up the environment.
 
