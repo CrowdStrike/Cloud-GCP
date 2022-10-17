@@ -19,13 +19,13 @@ resource "google_secret_manager_secret_iam_member" "secret_member" {
 # Cloud Function IAM
 resource "google_project_iam_member" "function_iam_binding" {
   project = var.project_id
-  role    = "roles/cloudfunctions.invoker"
+  role    = "roles/cloudfunctions.serviceAgent"
   member  = "serviceAccount:${google_service_account.sa.email}"
 }
 
 # Cloud Storage IAM
 resource "google_project_iam_member" "bucket_iam_binding" {
   project = var.project_id
-  role    = "roles/storage.objectViewer"
+  role    = "roles/pubsub.publisher"
   member  = "serviceAccount:${google_service_account.sa.email}"
 }

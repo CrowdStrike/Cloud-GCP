@@ -96,28 +96,25 @@ configure_cloud_shell() {
     FUNCTION_NAME=$(terraform -chdir=demo output -raw demo_function_name)
     echo -e "\nConfiguring Cloud Shell for demo...\n"
 
-    mkdir $TESTS
+    mkdir $TESTS ~/.cloudshell
+    touch ~/.cloudshell/no-apt-get-warning
     # SAFE EXAMPLES
     wget -q -O $TESTS/unscannable1.png https://adversary.crowdstrike.com/assets/images/Adversaries_Ocean_Buffalo.png
     wget -q -O $TESTS/unscannable2.jpg https://www.crowdstrike.com/blog/wp-content/uploads/2018/04/April-Adversary-Stardust.jpg
     sudo cp /usr/bin/whoami $TESTS/safe1.bin
     sudo cp /usr/sbin/ifconfig $TESTS/safe2.bin
     # MALICIOUS EXAMPLES
-    # wget -q -O malqueryinator.py https://raw.githubusercontent.com/CrowdStrike/falconpy/main/samples/malquery/malqueryinator.py
-    # python3 -m pip install crowdstrike-falconpy
-    # python3 malqueryinator.py -v "%s?action=CmdRes&u=%I64u&err=kill" -t wide -f malicious.zip -e 3 -k ${FID} -s ${FSECRET}
-    # unzip -d $TESTS -P infected malicious.zip
-    # C=0
-    # for f in $(ls $TESTS --hide=**.*)
-    # do
-    #     ((C=C+1))
-    #     mv $TESTS/$f $TESTS/malicious$C.bin
-    # done
-    # rm malicious.zip
-    # chown -R ec2-user:ec2-user $TESTS
-    # rm malicious.zip
-    # rm malqueryinator.py
-    # HELPER SCRIPTS
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -qq p7zip-full < /dev/null > /dev/null
+    [[ -d /tmp/malicious ]] || mkdir /tmp/malicious
+    # PDF Lazarus https://bazaar.abuse.ch/sample/2b4e8f1927927bdc2f71914ba1f12511d9b6bdbdb2df390e267f54dc4f8919dd/
+    wget -q -O /tmp/malicious/malwarepdf.zip --post-data "query=get_file&sha256_hash=2b4e8f1927927bdc2f71914ba1f12511d9b6bdbdb2df390e267f54dc4f8919dd" https://mb-api.abuse.ch/api/v1/
+    7z x /tmp/malicious/malwarepdf.zip -o/tmp/malicious -pinfected
+    mv /tmp/malicious/*.pdf $TESTS/malicious1.pdf
+    # DOCX RemcosRAT https://bazaar.abuse.ch/sample/361ed7bfb2e63c069267c87af84ec2d9b165862af126b865e386e2b910f262df/
+    wget -q -O /tmp/malicious/malwaredocx.zip --post-data "query=get_file&sha256_hash=361ed7bfb2e63c069267c87af84ec2d9b165862af126b865e386e2b910f262df" https://mb-api.abuse.ch/api/v1/
+    7z x /tmp/malicious/malwaredocx.zip -o/tmp/malicious -pinfected
+    mv /tmp/malicious/*.doc $TESTS/malicious2.doc
+    # Helper scripts
     sudo cp ./bin/get-findings.sh /usr/local/bin/get-findings
     sudo sed -i "s/FUNCTION/${FUNCTION_NAME}/g" /usr/local/bin/get-findings
     sudo cp ./bin/upload.sh /usr/local/bin/upload
@@ -126,11 +123,12 @@ configure_cloud_shell() {
     sudo cp ./bin/list-bucket.sh /usr/local/bin/list-bucket
     sudo sed -i "s/BUCKET/${BUCKET//\//\\/}/g" /usr/local/bin/list-bucket
     sudo chmod +x /usr/local/bin/get-findings /usr/local/bin/upload /usr/local/bin/list-bucket
-
+    # Clear screen
+    clear
     all_done
     echo -e "Welcome to the CrowdStrike Falcon GCP Bucket Protection demo environment!\n"
     echo -e "The name of your test bucket is ${BUCKET}.\n"
-    echo -e "There are test files in the testfiles folder. \nUse these to test the cloud-function trigger on bucket uploads. \nNOTICE: Files labeled \`malicious\` are DANGEROUS!\n"
+    echo -e "There are test files in the ${TESTS} folder. \nUse these to test the cloud-function trigger on bucket uploads. \nNOTICE: Files labeled \`malicious\` are DANGEROUS!\n"
     echo -e "Use the command \`upload\` to upload all of the test files to your demo bucket.\n"
     echo -e "You can view the contents of your bucket with the command \`list-bucket\`.\n"
     echo -e "Use the command \`get-findings\` to view all findings for your demo bucket.\n"
@@ -192,7 +190,7 @@ then
     # Destroy Terraform
 	terraform -chdir=demo destroy -compact-warnings --auto-approve
     sudo rm /usr/local/bin/get-findings /usr/local/bin/upload /usr/local/bin/list-bucket
-    rm -rf $TESTS
+    rm -rf $TESTS /tmp/malicious
     env_destroyed
 	exit 0
 fi
