@@ -121,10 +121,10 @@ configure_cloud_shell() {
     sudo cp ./bin/get-findings.sh /usr/local/bin/get-findings
     sudo sed -i "s/FUNCTION/${FUNCTION_NAME}/g" /usr/local/bin/get-findings
     sudo cp ./bin/upload.sh /usr/local/bin/upload
-    sudo sed -i "s/BUCKET/${BUCKET}/g" /usr/local/bin/upload
-    sudo sed -i "s/TESTS_DIR/${TESTS}/g" /usr/local/bin/upload
+    sudo sed -i "s/BUCKET/${BUCKET//\//\\/}/g" /usr/local/bin/upload
+    sudo sed -i "s/TESTS_DIR/${TESTS//\//\\/}/g" /usr/local/bin/upload
     sudo cp ./bin/list-bucket.sh /usr/local/bin/list-bucket
-    sudo sed -i "s/BUCKET/${BUCKET}/g" /usr/local/bin/list-bucket
+    sudo sed -i "s/BUCKET/${BUCKET//\//\\/}/g" /usr/local/bin/list-bucket
     sudo chmod +x /usr/local/bin/get-findings /usr/local/bin/upload /usr/local/bin/list-bucket
 
     all_done
@@ -174,7 +174,6 @@ then
     # Cleanup tmp file
     rm "${response_headers}"
 
-    UNIQUE=$(echo $RANDOM | md5sum | sed "s/[[:digit:].-]//g" | head -c 8)
     # Initialize Terraform
     if ! [ -f demo/.terraform.lock.hcl ]; then
         terraform -chdir=demo init
@@ -182,7 +181,7 @@ then
     # Apply Terraform
 	terraform -chdir=demo apply -compact-warnings --var falcon_client_id=$FID \
         --var falcon_client_secret=$FSECRET --var project_id=$PROJECT_ID \
-        --var base_url=$(cs_cloud) --var unique_id=$UNIQUE --auto-approve
+        --var base_url=$(cs_cloud) --auto-approve
     echo -e "$GRN\nPausing for 30 seconds to allow configuration to settle.$NC"
     sleep 30
     configure_cloud_shell
