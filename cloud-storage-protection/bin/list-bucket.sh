@@ -1,2 +1,2 @@
 #!/bin/bash
-aws s3 ls $BUCKET
+gsutil ls BUCKET

@@ -90,6 +90,52 @@ cs_set_base_url() {
     cs_falcon_cloud="${region_hint}"
 }
 
+configure_cloud_shell() {
+    TESTS="${HOME}/testfiles"
+    BUCKET=$(terraform -chdir=demo output -raw demo_bucket)
+    FUNCTION_NAME=$(terraform -chdir=demo output -raw demo_function_name)
+    echo -e "\nConfiguring Cloud Shell for demo...\n"
+
+    mkdir $TESTS
+    # SAFE EXAMPLES
+    wget -q -O $TESTS/unscannable1.png https://adversary.crowdstrike.com/assets/images/Adversaries_Ocean_Buffalo.png
+    wget -q -O $TESTS/unscannable2.jpg https://www.crowdstrike.com/blog/wp-content/uploads/2018/04/April-Adversary-Stardust.jpg
+    sudo cp /usr/bin/whoami $TESTS/safe1.bin
+    sudo cp /usr/sbin/ifconfig $TESTS/safe2.bin
+    # MALICIOUS EXAMPLES
+    # wget -q -O malqueryinator.py https://raw.githubusercontent.com/CrowdStrike/falconpy/main/samples/malquery/malqueryinator.py
+    # python3 -m pip install crowdstrike-falconpy
+    # python3 malqueryinator.py -v "%s?action=CmdRes&u=%I64u&err=kill" -t wide -f malicious.zip -e 3 -k ${FID} -s ${FSECRET}
+    # unzip -d $TESTS -P infected malicious.zip
+    # C=0
+    # for f in $(ls $TESTS --hide=**.*)
+    # do
+    #     ((C=C+1))
+    #     mv $TESTS/$f $TESTS/malicious$C.bin
+    # done
+    # rm malicious.zip
+    # chown -R ec2-user:ec2-user $TESTS
+    # rm malicious.zip
+    # rm malqueryinator.py
+    # HELPER SCRIPTS
+    sudo cp ./bin/get-findings.sh /usr/local/bin/get-findings
+    sudo sed -i "s/FUNCTION/${FUNCTION_NAME}/g" /usr/local/bin/get-findings
+    sudo cp ./bin/upload.sh /usr/local/bin/upload
+    sudo sed -i "s/BUCKET/${BUCKET}/g" /usr/local/bin/upload
+    sudo sed -i "s/TESTS_DIR/${TESTS}/g" /usr/local/bin/upload
+    sudo cp ./bin/list-bucket.sh /usr/local/bin/list-bucket
+    sudo sed -i "s/BUCKET/${BUCKET}/g" /usr/local/bin/list-bucket
+    sudo chmod +x /usr/local/bin/get-findings /usr/local/bin/upload /usr/local/bin/list-bucket
+
+    all_done
+    echo -e "Welcome to the CrowdStrike Falcon GCP Bucket Protection demo environment!\n"
+    echo -e "The name of your test bucket is ${BUCKET}.\n"
+    echo -e "There are test files in the testfiles folder. \nUse these to test the cloud-function trigger on bucket uploads. \nNOTICE: Files labeled \`malicious\` are DANGEROUS!\n"
+    echo -e "Use the command \`upload\` to upload all of the test files to your demo bucket.\n"
+    echo -e "You can view the contents of your bucket with the command \`list-bucket\`.\n"
+    echo -e "Use the command \`get-findings\` to view all findings for your demo bucket.\n"
+}
+
 # Ensure script is ran in cloud-storage-protection directory
 [[ -d demo ]] && [[ -d cloud-function ]] || die "Please run this script from the cloud-storage-protection root directory"
 
@@ -139,13 +185,15 @@ then
         --var base_url=$(cs_cloud) --var unique_id=$UNIQUE --auto-approve
     echo -e "$GRN\nPausing for 30 seconds to allow configuration to settle.$NC"
     sleep 30
-    all_done
+    configure_cloud_shell
 	exit 0
 fi
 if [[ "$MODE" == "down" ]]
 then
     # Destroy Terraform
 	terraform -chdir=demo destroy -compact-warnings --auto-approve
+    sudo rm /usr/local/bin/get-findings /usr/local/bin/upload /usr/local/bin/list-bucket
+    rm -rf $TESTS
     env_destroyed
 	exit 0
 fi
