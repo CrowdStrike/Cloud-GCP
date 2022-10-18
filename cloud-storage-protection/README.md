@@ -4,6 +4,9 @@
 
 # CrowdStrike Falcon GCP Cloud Storage Bucket Protection
 
+## Prerequisites
++ Have access to GCP w/ permissions to manage resources
++ Knowledge on creating Falcon API Keys
 
 ## Demonstration
 This demonstration creates a new GCP Cloud Storage bucket, implements GCP Cloud Storage Bucket Protection on that bucket, and then deploys an instance with several test scripts and sample files for testing the integration in a real environment.

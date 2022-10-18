@@ -17,7 +17,7 @@ In order to properly use this demo, run the following helper script to enable th
 ./enable_services.sh
 ```
 ### CrowdStrike Falcon API Credentials
-Create or modify an API Key in the Falcon Console and 
+Create or modify an API Key in the Falcon Console and
 Assign the following scopes:
 - Quick Scan - `READ`, `WRITE`
 - Sample Uploads - `READ`,`WRITE`
@@ -68,7 +68,7 @@ Next, you'll use the helper commands to upload the sample files, and check for f
 ## Using the Demonstration
 Now that your environment is stood up, and your cloud-shell is configured, you can use the helper commands to test functionality.
 
-### List sample files 
+### List sample files
 Run the following command to list the sample files:
 ```sh
 ls ~/testfiles
@@ -123,7 +123,7 @@ LOG: Verdict for malicious1.pdf: malware
 ### Use the gcloud cli
 Run the following command using the gcloud cli:
 ```sh
-gcloud functions logs read csexample-cs_bucket_protection --min-log-level=info | grep log
+gcloud functions logs read csexample-cs_bucket_protection --min-log-level=info
 ```
 This will give you more information surrounding a log entry.
 
