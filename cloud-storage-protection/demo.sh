@@ -1,4 +1,5 @@
 #!/bin/bash
+export TESTS="${HOME}/testfiles"
 RD="\033[1;31m"
 GRN="\033[1;33m"
 NC="\033[0;0m"
@@ -91,7 +92,6 @@ cs_set_base_url() {
 }
 
 configure_cloud_shell() {
-    TESTS="${HOME}/testfiles"
     BUCKET=$(terraform -chdir=demo output -raw demo_bucket)
     FUNCTION_NAME=$(terraform -chdir=demo output -raw demo_function_name)
     echo -e "\nConfiguring Cloud Shell for demo...\n"
