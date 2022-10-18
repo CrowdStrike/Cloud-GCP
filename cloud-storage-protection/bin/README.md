@@ -7,6 +7,6 @@ These scripts are used within the demonstration provided as part of this integra
 
 ## Contents
 
-+ `get-findings.sh` - Retrieves bucket protection findings from AWS Security Hub for the demonstration bucket.
++ `get-findings.sh` - Retrieves bucket protection findings from GCP Cloud Function Logs for the demonstration bucket.
 + `list-bucket.sh` - Lists the contents of the demonstration bucket.
 + `upload.sh` - Uploads the contents of the `testfiles` folder to the demonstration bucket.
