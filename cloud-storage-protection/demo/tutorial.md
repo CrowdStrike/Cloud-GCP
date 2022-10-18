@@ -5,8 +5,9 @@ This demonstration leverages Terraform to provide a functional demonstration of 
 ## Select Project
 <walkthrough-project-setup></walkthrough-project-setup>
 
-### Toggle Editor to create space
-This demonstration mainly leverages the cloud-shell terminal, so go ahead and <walkthrough-spotlight-pointer spotlightId="toggle-editor">toggle the editor</walkthrough-spotlight-pointer> to create more space
+---
+### Toggle Editor for more space
+(optional) <walkthrough-spotlight-pointer spotlightId="toggle-editor">**Toggle Editor**</walkthrough-spotlight-pointer>
 
 ## Setup
 ### Set Cloud Shell Project
@@ -27,6 +28,7 @@ Assign the following scopes:
 
 > You will be asked to provide these credentials when the `demo.sh` script executes.
 
+---
 Next, you'll be standing up an environment for this demonstration.
 
 ## Let's Get Started
@@ -40,7 +42,9 @@ You will be asked to provide your CrowdStrike API credentials.
 
 If this is the first time you're executing the demonstration, Terraform will initialize the working folder after you submit these values. After this process completes, Terraform will begin to stand-up the environment.
 
-It takes roughly 3 minutes to stand up the environment. When the environment is done, you will be presented with the message:
+It takes roughly 3 minutes to stand up the environment.
+
+When the environment is done, you will be presented with the message:
 ```terminal
 
 ╭━━━┳╮╱╱╭╮╱╱╱╭━━━┳━━━┳━╮╱╭┳━━━╮
@@ -53,23 +57,15 @@ It takes roughly 3 minutes to stand up the environment. When the environment is 
 Welcome to the CrowdStrike Falcon GCP Bucket Protection demo environment!
 
 The name of your test bucket is gs://csexample-cs-protected-bucket.
-
-There are test files in the /home/user/testfiles folder.
-Use these to test the cloud-function trigger on bucket uploads.
-
-NOTICE: Files labeled `malicious` are DANGEROUS!
-
-Use the command `upload` to upload all of the test files to your demo bucket.
-
-You can view the contents of your bucket with the command `list-bucket`.
-
-Use the command `get-findings` to view any findings for your demo bucket.
+...
+...
 ```
 
+---
 Next, you'll use the helper commands to upload the sample files, and check for findings.
 
 ## Using the Demonstration
-Now that your environment is stood up, and your cloud-shell is configured, you can use the helper commands to test functionality.
+Now that your environment is stood up, and your cloud-shell is configured, you can start testing functionality.
 
 ### List sample files
 Run the following command to list the sample files:
@@ -104,16 +100,19 @@ Uploading unscannable2.jpg to gs://csexample-cs-protected-bucket...
 Upload complete. Check Cloud Functions logs or use the get-findings command for scan results.
 ```
 
+---
 Next, you'll review the output from the Cloud Functions demonstration function.
 
 ## Review Cloud Function Logs
-There are a few ways to view the status of the files uploaded to the demonstration bucket.
+There are a few ways to view the status of the files uploaded to the demonstration bucket. Below
+you will use the helper command `get-findings` as the main method for this demonstration.
 
 ### Use the `get-findings` helper command
 Run the following command to view any detected Malware threats:
 ```sh
 get-findings
 ```
+*Note: You may need to wait a few seconds before both malicious files are detected*
 
 #### Example
 ```terminal
@@ -123,7 +122,7 @@ LOG: Threat malicious1.pdf removed from bucket csexample-cs-protected-bucket
 LOG: Verdict for malicious1.pdf: malware
 ```
 
-### Use the gcloud cli
+### Use the gcloud cli (Optional)
 Run the following command using the gcloud cli:
 ```sh
 gcloud functions logs read csexample-cs_bucket_protection --min-log-level=info
@@ -137,18 +136,18 @@ NAME: csexample-cs_bucket_protection
 EXECUTION_ID: oumcwnyi6hp1
 TIME_UTC: 2022-10-17 18:44:42.272
 LOG: Scan error for unscannable1.png: sample type not supported
-
 ...
 ...
 ```
 
-### Use the Logging Dashboard
+### Use the Logging Dashboard (Optional)
 The quickest method for viewing the logs on the console is to:
 
-Navigate to the Cloud Functions service page
+Navigate to the [Cloud Functions](https://console.cloud.google.com/functions) service page
 -> Select the demo function
 -> Select `LOGS`
 
+---
 Next, you'll verify the malicious files were removed from the bucket.
 
 ## Verify malicious files were deleted
@@ -164,10 +163,11 @@ gs://csexample-cs-protected-bucket/safe1.bin
 gs://csexample-cs-protected-bucket/safe2.bin
 gs://csexample-cs-protected-bucket/unscannable1.png
 gs://csexample-cs-protected-bucket/unscannable2.jpg
-````
+```
 
 Notice the malicious files are not listed. This is good news!
 
+---
 Next, you'll tear down the demonstration to prevent your organization from yelling at you about runaway cloud costs ;)
 
 ## Tearing Down the Demonstration
@@ -187,6 +187,8 @@ Destroy complete! Resources: 13 destroyed.
 ╰━━━┻━━━┻━━━╯╱╰╯╱╰╯╰━┻━━━╯╱╰╯╱╰━━━┻━━━╯
 ```
 
+---
+Finally, you'll learn more about customizing this demonstration (if applicable)
 
 ## Customize Demonstration
 In the event that you would like to re-run this demonstration and use different values:
@@ -195,5 +197,6 @@ In the event that you would like to re-run this demonstration and use different 
     Edit the variable Terraform file
 </walkthrough-editor-open-file>
 
+---
 Congratulations on completing this demonstration!
 <walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>

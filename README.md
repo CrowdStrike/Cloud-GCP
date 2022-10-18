@@ -14,4 +14,4 @@ A collection of projects supporting GCP integration
  * Container Security
    * [Falcon Container Security Documents](container)
  * Cloud Storage Security
-   * [Cloud Storage Bucket Protection](cloud-storage-protection)
+   * [Cloud Storage Bucket Protection w/ QuickScan API](cloud-storage-protection)
