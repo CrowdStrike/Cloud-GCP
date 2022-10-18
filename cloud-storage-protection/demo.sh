@@ -94,10 +94,10 @@ cs_set_base_url() {
 configure_cloud_shell() {
     BUCKET=$(terraform -chdir=demo output -raw demo_bucket)
     FUNCTION_NAME=$(terraform -chdir=demo output -raw demo_function_name)
-    echo -e "\nConfiguring Cloud Shell for demo...\n"
 
-    mkdir $TESTS ~/.cloudshell
-    touch ~/.cloudshell/no-apt-get-warning
+    echo -e "\nConfiguring Cloud Shell for demo...\n"
+    [[ -d $TESTS ]] || mkdir $TESTS
+    [[ -d ~/.cloudshell ]] || mkdir ~/.cloudshell && touch ~/.cloudshell/no-apt-get-warning
     # SAFE EXAMPLES
     echo -e "Downloading safe sample files...\n"
     wget -q -O $TESTS/unscannable1.png https://adversary.crowdstrike.com/assets/images/Adversaries_Ocean_Buffalo.png
