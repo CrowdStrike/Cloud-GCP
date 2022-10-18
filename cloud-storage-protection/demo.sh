@@ -132,7 +132,7 @@ configure_cloud_shell() {
     all_done
     echo -e "Welcome to the CrowdStrike Falcon GCP Bucket Protection demo environment!\n"
     echo -e "The name of your test bucket is ${BUCKET}.\n"
-    echo -e "There are test files in the ${TESTS} folder. \nUse these to test the cloud-function trigger on bucket uploads. \nNOTICE: Files labeled \`malicious\` are DANGEROUS!\n"
+    echo -e "There are test files in the ${TESTS} folder. \nUse these to test the cloud-function trigger on bucket uploads. \n\nNOTICE: Files labeled \`malicious\` are DANGEROUS!\n"
     echo -e "Use the command \`upload\` to upload all of the test files to your demo bucket.\n"
     echo -e "You can view the contents of your bucket with the command \`list-bucket\`.\n"
     echo -e "Use the command \`get-findings\` to view all findings for your demo bucket.\n"
