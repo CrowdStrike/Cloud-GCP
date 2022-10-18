@@ -5,6 +5,9 @@ This demonstration leverages Terraform to provide a functional demonstration of 
 ## Select Project
 <walkthrough-project-setup></walkthrough-project-setup>
 
+### Toggle Editor to create space
+This demonstration mainly leverages the cloud-shell terminal, so go ahead and <walkthrough-spotlight-pointer spotlightId="toggle-editor">toggle the editor</walkthrough-spotlight-pointer> to create more space
+
 ## Setup
 ### Set Cloud Shell Project
 ```sh
