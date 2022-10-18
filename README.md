@@ -13,3 +13,5 @@ A collection of projects supporting GCP integration
    * [Deployment Guide to Kubernetes (manual)](https://github.com/CrowdStrike/falcon-integration-gateway/tree/main/docs/chronicle)
  * Container Security
    * [Falcon Container Security Documents](container)
+ * Cloud Storage Security
+   * [Cloud Storage Bucket Protection](cloud-storage-protection)
