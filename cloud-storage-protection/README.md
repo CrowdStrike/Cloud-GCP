@@ -22,7 +22,7 @@ This solution leverages the same APIs and logic that is implemented by the serve
 
 The read more about this component, review the documentation located [here](on-demand).
 
-## Deploying to an existing bucket (Coming Soon)
+## Deploying to an existing bucket
 A helper routine is provided as part of this integration that assists with deploying protection to an existing bucket. This helper leverages Terraform, and can be started by executing the `existing.sh` script.
 
 Launch the demo with the following button:
