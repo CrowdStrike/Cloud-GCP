@@ -14,6 +14,7 @@ services=(
     logging.googleapis.com
     pubsub.googleapis.com
     cloudfunctions.googleapis.com
+    compute.googleapis.com
     storage.googleapis.com
 )
 
