@@ -15,7 +15,7 @@ Launch the demo with the following button:
 
 [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://shell.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2FCrowdStrike%2FCloud-GCP&cloudshell_workspace=cloud-storage-protection&cloudshell_tutorial=demo%2Ftutorial.md)
 
-## On-demand scanning (Coming Soon)
+## On-demand scanning
 For scenarios where you either do not want to implement real-time protection, or where you are wanting to confirm the contents of a bucket before implementing protection, an on-demand scanning solution is provided as part of this integration.
 
 This solution leverages the same APIs and logic that is implemented by the serverless handler that provides real-time protection.
