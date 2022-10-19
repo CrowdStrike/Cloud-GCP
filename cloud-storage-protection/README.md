@@ -22,6 +22,10 @@ This solution leverages the same APIs and logic that is implemented by the serve
 
 The read more about this component, review the documentation located [here](on-demand).
 
+You can also launch a tutorial by clicking the following button:
+
+[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://shell.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2FCrowdStrike%2FCloud-GCP&cloudshell_workspace=cloud-storage-protection%2Fon-demand&cloudshell_tutorial=tutorial.md)
+
 ## Deploying to an existing bucket
 A helper routine is provided as part of this integration that assists with deploying protection to an existing bucket. This helper leverages Terraform, and can be started by executing the `existing.sh` script.
 
