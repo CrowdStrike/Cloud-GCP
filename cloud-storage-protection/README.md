@@ -25,4 +25,6 @@ The read more about this component, review the documentation located [here](on-d
 ## Deploying to an existing bucket (Coming Soon)
 A helper routine is provided as part of this integration that assists with deploying protection to an existing bucket. This helper leverages Terraform, and can be started by executing the `existing.sh` script.
 
-For more details about deploying protection to a pre-existing bucket, review the documentation located [here](existing).
+Launch the demo with the following button:
+
+[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://shell.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2FCrowdStrike%2FCloud-GCP&cloudshell_workspace=cloud-storage-protection&cloudshell_tutorial=existing%2Ftutorial.md)
