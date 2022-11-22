@@ -77,7 +77,7 @@ def cs_bucket_protection(event, _):
             file_data=io.BytesIO(blob_data),
         )
         if response["status_code"] > 201:
-            raise SystemExit(f"Error uploading object {file_name} from bucket {bucket_name} to Falcon X Sandbox. "
+            raise SystemExit(f"Error uploading object {file_name} from bucket {bucket_name} to Falcon Intelligence Sandbox. "
                   "Make sure your API key has the Sample Uploads permission.")
         else:
             log.info("File uploaded to CrowdStrike Falcon Sandbox.")
