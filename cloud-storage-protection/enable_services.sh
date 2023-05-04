@@ -16,6 +16,8 @@ services=(
     cloudfunctions.googleapis.com
     compute.googleapis.com
     storage.googleapis.com
+    iam.googleapis.com
+    cloudresourcemanager.googleapis.com
 )
 
 # Enable the services
