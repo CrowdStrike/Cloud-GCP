@@ -91,7 +91,7 @@ install_deps(){
     apt install ./$pkg > /dev/null
 
     mkdir -p /yaml
-    wget -q -O /yaml/vulnerable.example.yaml https://raw.githubusercontent.com/isimluk/vulnapp/master/vulnerable.example.yaml
+    wget -q -O /yaml/vulnerable.example.yaml https://raw.githubusercontent.com/crowdstrike/vulnapp/main/vulnerable.example.yaml
 }
 
 progname=$(basename "$0")
