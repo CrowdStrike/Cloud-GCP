@@ -14,6 +14,6 @@ A collection of projects supporting GCP integration
  * Container Security
    * [Falcon Container Security Documents](container)
  * VM Sensor Deployment
-  * [Google OS Config](osconfig)
+  * [Google VM Manager (OSConfig)](osconfig)
  * Cloud Storage Security
    * [Cloud Storage Bucket Protection w/ QuickScan API](cloud-storage-protection)
