@@ -38,13 +38,13 @@ https://cloud.google.com/compute/docs/manage-os#agent-install
 If you have not created a key or do not know the secret for existing keys, you can create a new key by selecting
 “Add new api client”
 
-![Alt text](<API Clients and Keys.png>)
+![API Clients and Keys](images/API_Clients_and_Keys.png)
 
 Google will not be using any API access to your account and will simply use the API keys to verify that you are a
 current CrowdStrike customer. As such, you can delete the key later after deployment if you wish. Setup a new key as in the
 image below:
 
-![Alt text](<Add new API Client.png>)
+![Add new API Client](images/Add_new_API_Client.png)
 
 You are now ready to proceed to install.
 
@@ -59,15 +59,15 @@ https://console.cloud.google.com/security/agent/deployment/crowdstrike
 4) Customer ID: The CID for your CrowdStrike Account, copied from:
 https://falcon.crowdstrike.com/hosts/sensor-downloads
 
-![Alt text](<CrowdStrike Falcon EPP.png>)
+![CrowdStrike Falcon EPP](images/CrowdStrike_Falcon_EPP.png)
 
 Next, enter your Label key and Value from the Prerequisites section. You can also use VM Instance Name prefixs to target VMs. For example if all machines in the Dev group have the name “dev” prepended to the name, we can target machines like “dev-ib376”.
 
-![Alt text](<VM Assignment.png>)
+![CrowdStrike Falcon EPP](images/VM_Assignment.png)
 
 Finally, select an appropriate region for the sensor binaries to be copied to to stage them for install.
 
-![Alt text](<Storage Bucket Details.png>)
+![CrowdStrike Falcon EPP](images/Storage_Bucket_Details.png)
 
 Clicking DEPLOY will deploy the sensor to the targeted images. You will be redirected to the hosts console of the CrowdStrike UI to check the status of new Hosts.  This may take 10-15 minutes to appear depending on your configuration of the OS Config agent. Existing and new machines that match the policies label or name prefix targeting will have the sensor installed.
 
