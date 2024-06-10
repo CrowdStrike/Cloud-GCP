@@ -14,6 +14,6 @@ A collection of projects supporting GCP integration
  * Container Security
    * [Falcon Container Security Documents](container)
  * VM Sensor Deployment
-  * [Google VM Manager (OS Policy)](https://github.com/CrowdStrike/gcp-vm-manager-os-policy)
+   * [Google VM Manager (OS Policy)](https://github.com/CrowdStrike/gcp-vm-manager-os-policy) 
  * Cloud Storage Security
    * [Cloud Storage Bucket Protection w/ QuickScan API](cloud-storage-protection)
