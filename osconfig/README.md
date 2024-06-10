@@ -1,3 +1,6 @@
+>[!CAUTION]
+> osconfig is depreciated and replaced by our [OS Policy integration](https://github.com/CrowdStrike/gcp-vm-manager-os-policy).
+
 
 # CrowdStrike Falcon Sensor for Cloud Workload Protection: Google Cloud Platform
 
