@@ -2,6 +2,13 @@
 
 [![Twitter URL](https://img.shields.io/twitter/url?label=Follow%20%40CrowdStrike&style=social&url=https%3A%2F%2Ftwitter.com%2FCrowdStrike)](https://twitter.com/CrowdStrike)
 
+> [!WARNING]
+> ## DEPRECATION NOTICE
+>
+> This repository will be deprecated in the near future in favor of our new Cloud Storage Protection solution using the QuickScan Pro APIs. The new repository is available at:
+>
+> [https://github.com/crowdstrike/cloud-storage-protection](https://github.com/crowdstrike/cloud-storage-protection)
+
 # CrowdStrike Falcon GCP Cloud Storage Bucket Protection
 
 ## Prerequisites
