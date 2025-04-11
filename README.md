@@ -14,6 +14,8 @@
 
 - **VM Sensor Deployment**
   - [Google VM Manager (OS Policy)](https://github.com/CrowdStrike/gcp-vm-manager-os-policy)
+- **GKE Protection**
+  - [GCP GKE Protection](https://github.com/CrowdStrike/gcp-gke-protection)
 
 ## Cloud Storage Protection
 
