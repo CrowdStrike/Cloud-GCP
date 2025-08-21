@@ -12,13 +12,14 @@
 
 ## CrowdStrike Sensor Automation
 
-- **VM Sensor Deployment**
+- **Deploy to GCE compute instances**
   - [Google VM Manager (OS Policy)](https://github.com/CrowdStrike/gcp-vm-manager-os-policy)
-- **GKE Protection**
-  - [GCP GKE Protection](https://github.com/CrowdStrike/gcp-gke-protection)
+- **Deploy to GKE clusters**
+  - [GKE Auto-protection](https://github.com/CrowdStrike/gcp-gke-protection)
+  - [GKE Autopilot operator](https://github.com/CrowdStrike/falcon-operator/tree/main/docs/deployment/gke#gke-autopilot-configuration) (if not using auto-protection)
+- **Deploy to Cloud Run applications**
+  - [Patch container images](https://falcon.crowdstrike.com/login/?unilogin=true&next=/documentation/page/p6af9353/deploy-falcon-container-sensor-for-linux-on-google-cloud-run) (requires Falcon login)
 
 ## Cloud Storage Protection
 
 - [Cloud Storage Bucket Protection with CrowdStrike QuickScan Pro API](https://github.com/crowdstrike/cloud-storage-protection)
-- [Cloud Storage Bucket Protection with CrowdStrike QuickScan ML API](cloud-storage-protection)
-  - (*Deprecated and slated for removal in 6 months*)
