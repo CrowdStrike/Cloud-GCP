@@ -17,8 +17,6 @@
 - **Deploy to GKE clusters**
   - [GKE Auto-protection](https://github.com/CrowdStrike/gcp-gke-protection)
   - [GKE Autopilot operator](https://github.com/CrowdStrike/falcon-operator/tree/main/docs/deployment/gke#gke-autopilot-configuration) (if not using auto-protection)
-- **Deploy to Cloud Run applications**
-  - [Patch container images](https://falcon.crowdstrike.com/login/?unilogin=true&next=/documentation/page/p6af9353/deploy-falcon-container-sensor-for-linux-on-google-cloud-run) (requires Falcon login)
 
 ## Cloud Storage Protection
 
