@@ -12,10 +12,11 @@
 
 ## CrowdStrike Sensor Automation
 
-- **VM Sensor Deployment**
+- **Deploy to GCE compute instances**
   - [Google VM Manager (OS Policy)](https://github.com/CrowdStrike/gcp-vm-manager-os-policy)
-- **GKE Protection**
-  - [GCP GKE Protection](https://github.com/CrowdStrike/gcp-gke-protection)
+- **Deploy to GKE clusters**
+  - [GKE Auto-protection](https://github.com/CrowdStrike/gcp-gke-protection)
+  - [GKE Autopilot operator](https://github.com/CrowdStrike/falcon-operator/tree/main/docs/deployment/gke#gke-autopilot-configuration) (if not using auto-protection)
 
 ## Cloud Storage Protection
 
