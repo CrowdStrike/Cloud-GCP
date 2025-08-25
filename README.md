@@ -20,5 +20,3 @@
 ## Cloud Storage Protection
 
 - [Cloud Storage Bucket Protection with CrowdStrike QuickScan Pro API](https://github.com/crowdstrike/cloud-storage-protection)
-- [Cloud Storage Bucket Protection with CrowdStrike QuickScan ML API](cloud-storage-protection)
-  - (*Deprecated and slated for removal in 6 months*)
