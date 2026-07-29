@@ -6,7 +6,7 @@
 
 ## AI Security
 
-- [AIDR Connector for Agent Gateway](https://github.com/CrowdStrike/aidr-google-agent-gateway) (and Cloud Load Balancer)
+- [AIDR Collector for Agent Gateway](https://github.com/CrowdStrike/aidr-google-agent-gateway) (and Cloud Load Balancer)
 - [Falcon MCP Example Agent with ADK](https://github.com/CrowdStrike/falcon-mcp/tree/main/examples/adk)
 
 ## Security Command Center Integration
