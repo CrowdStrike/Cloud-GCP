@@ -1,0 +1,32 @@
+{
+  "name": "crowdstrike",
+  "displayName": "CrowdStrike Falcon",
+  "version": "1.0.0",
+  "description": "Use the official CrowdStrike-hosted MCP server to work across Falcon: detections, cases, threat intel, SIEM, hosts, vulnerabilities, cloud, and more.",
+  "logo": "assets/falcon.svg",
+  "suggestedPrompts": [
+    "Show me new high severity detections from the last 7 days",
+    "Find threat actors targeting financial services",
+    "Which MCP servers have AI agents connected to across the fleet?"
+  ],
+  "category": "Security",
+  "keywords": [
+    "crowdstrike",
+    "falcon",
+    "security",
+    "edr",
+    "xdr",
+    "siem",
+    "threat-intelligence",
+    "cloud-security",
+    "identity",
+    "soc"
+  ],
+  "author": {
+    "name": "CrowdStrike",
+    "email": "cloud-integrations-alliances@crowdstrike.com",
+    "url": "https://www.crowdstrike.com"
+  },
+  "homepage": "https://developer.crowdstrike.com/falcon-mcp/overview/",
+  "license": "MIT"
+}
