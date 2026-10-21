@@ -9,6 +9,7 @@
 - [AIDR Collector for Agent Gateway](https://github.com/CrowdStrike/aidr-google-agent-gateway) (and Cloud Load Balancer)
 - [Falcon MCP Example Agent with ADK](https://github.com/CrowdStrike/falcon-mcp/tree/main/examples/adk)
 - [Falcon MCP Extension for Gemini CLI](https://geminicli.com/extensions/?name=CrowdStrikefalcon-mcp)
+- [CrowdStrike MCP Plugin for Antigravity](https://github.com/CrowdStrike/Cloud-GCP/tree/main/.antigravity-plugin)
 
 ## Security Command Center Integration
 
