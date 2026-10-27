@@ -2,20 +2,12 @@
   "mcpServers": {
     "falcon": {
       "serverUrl": "${FALCON_MCP_URL}",
-      "oauth": {
-        "clientId": "${FALCON_CLIENT_ID}"
-      },
       "variables": [
         {
           "name": "FALCON_MCP_URL",
           "title": "Falcon MCP server URL",
           "description": "The MCP server URL for your Falcon cloud. US-1: https://mcp.crowdstrike.com/v1 | US-2: https://mcp.us-2.crowdstrike.com/v1 | EU-1: https://mcp.eu-1.crowdstrike.com/v1",
           "link": "https://developer.crowdstrike.com/falcon-mcp/overview/"
-        },
-        {
-          "name": "FALCON_CLIENT_ID",
-          "title": "Falcon MCP client ID",
-          "description": "The client ID of a public MCP client in your Falcon console, created with the redirect URI https://antigravity.google/oauth-callback. It must be in the same Falcon cloud as the server URL."
         }
       ]
     }

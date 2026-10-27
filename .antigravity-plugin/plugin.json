@@ -1,7 +1,7 @@
 {
   "name": "crowdstrike",
   "displayName": "CrowdStrike Falcon",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Use the official CrowdStrike-hosted MCP server to work across Falcon: detections, cases, threat intel, SIEM, hosts, vulnerabilities, cloud, and more.",
   "logo": "assets/falcon.svg",
   "suggestedPrompts": [
